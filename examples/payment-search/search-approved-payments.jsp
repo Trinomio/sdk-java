@@ -39,16 +39,15 @@
         // Show payment information
         %>
         <table border='1'>
-            <tr><th>id</th><th>site_id</th><th>external_reference</th><th>status</th></tr>
+            <tr><th>id</th><th>date_created</th><th>operation_type</th><th>external_reference</th></tr>
             <%
             for (int i = 0; i < results.length(); i++) {
                 %>
                 <tr>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("id")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("site_id")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("date_created")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("operation_type")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("external_reference")%></td>
+                    <td><%=results.getJSONObject(i).getString("id")%></td>
+                    <td><%=results.getJSONObject(i).getString("date_created")%></td>
+                    <td><%=results.getJSONObject(i).getString("operation_type")%></td>
+                    <td><%=results.getJSONObject(i).getString("external_reference")%></td>
                 </tr>
                 <%
             }

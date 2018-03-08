@@ -92,7 +92,6 @@ System.out.println(updatePreferenceResult.toString());
 ```JAVA
 // Sets the filters you want
 Map<String, Object> filters = new HashMap<String, Object> ();
-   filters.put("site_id", "MLA"); // Argentina: MLA; Brasil: MLB; Mexico: MLM; Venezuela: MLV; Colombia: MCO
    filters.put("external_reference", "Bill001");
         
 // Search payment data according to filters
@@ -100,9 +99,9 @@ JSONObject searchResult = mp.searchPayment (filters);
 JSONArray results = searchResult.getJSONObject("response").getJSONArray("results");
 
 for (int i = 0; i < results.length(); i++) {
-    System.out.println(results.getJSONObject(i).getJSONObject("collection").getString("id"));
-    System.out.println(results.getJSONObject(i).getJSONObject("collection").getString("external_reference"));
-    System.out.println(results.getJSONObject(i).getJSONObject("collection").getString("status"));
+    System.out.println(results.getJSONObject(i).getString("id"));
+    System.out.println(results.getJSONObject(i).getString("external_reference"));
+    System.out.println(results.getJSONObject(i).getString("status"));
 }
 ```
 

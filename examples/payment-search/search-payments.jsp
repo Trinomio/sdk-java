@@ -26,7 +26,6 @@
       
         // Sets the filters you want
         Map<String, Object> filters = new HashMap<String, Object> ();
-            filters.put("site_id", "MLA"); // Argentina: MLA; Brasil: MLB
             filters.put("external_reference", "Bill001");
       
         // Search payment data according to filters
@@ -41,9 +40,9 @@
             for (int i = 0; i < results.length(); i++) {
                 %>
                 <tr>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("id")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("external_reference")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("status")%></td>
+                    <td><%=results.getJSONObject(i).getString("id")%></td>
+                    <td><%=results.getJSONObject(i).getString("external_reference")%></td>
+                    <td><%=results.getJSONObject(i).getString("status")%></td>
                 </tr>
                 <%
             }
