@@ -33,8 +33,8 @@ public class ReceiveFeed extends HttpServlet{
 				merchantOrderInfo = mp.get("/merchant_orders/" + request.getParameter("id"), params, false);
 				// Get the payment reported by the IPN. Glossary of attributes response in https://developers.mercadopago.com
 			}else if(request.getParameter("topic").equals("payment")){
-				JSONObject paymentInfo = mp.get("/collections/notifications/" + request.getParameter("id"), params, false);
-				merchantOrderInfo = mp.get("/merchant_orders/" + paymentInfo.getJSONObject("response").getJSONObject("collection").getString("merchant_order_id"), params, false);
+				JSONObject paymentInfo = mp.get("/v1/payments/" + request.getParameter("id"), params, false);
+				merchantOrderInfo = mp.get("/merchant_orders/" + paymentInfo.getJSONObject("response").getJSONObject("order").getString("id"), params, false);
 			}
 			//If the payment's transaction amount is equal (or bigger) than the merchant order's amount you can release your items 
 			if (merchantOrderInfo.getInt("status") == 200) {

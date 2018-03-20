@@ -27,7 +27,7 @@ import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
  *
  */
 public class MP {
-	public static final String version = "0.3.4";
+	public static final String version = "0.3.5";
 
 	private String client_id = null;
 	private String client_secret = null;
@@ -111,7 +111,7 @@ public class MP {
 		
 		String uriPrefix = this.sandbox ? "/sandbox" : "";
 			
-		JSONObject paymentInfo = RestClient.get (uriPrefix + "/collections/notifications/"+id+"?access_token="+accessToken);
+		JSONObject paymentInfo = RestClient.get ("/v1/payments/"+id+"?access_token="+accessToken);
 		
 		return paymentInfo;
 	}
@@ -156,9 +156,8 @@ public class MP {
 		}
 
 		JSONObject refundStatus = new JSONObject ();
-		refundStatus.put("status", "refunded");
 		
-		JSONObject response = RestClient.put ("/collections/"+id+"?access_token="+accessToken, refundStatus);
+		JSONObject response = RestClient.post ("/v1/payments/"+id+"/refunds?access_token="+accessToken, refundStatus);
 		
 		return response;
 	}
@@ -181,7 +180,7 @@ public class MP {
 		JSONObject cancelStatus = new JSONObject ();
 		cancelStatus.put("status", "cancelled");
 		
-		JSONObject response = RestClient.put ("/collections/"+id+"?access_token="+accessToken, cancelStatus);
+		JSONObject response = RestClient.put ("/v1/payments/"+id+"?access_token="+accessToken, cancelStatus);
 		
 		return response;
 	}
@@ -239,7 +238,7 @@ public class MP {
 		
 		String uriPrefix = this.sandbox ? "/sandbox" : "";
 			
-		JSONObject collectionResult = RestClient.get (uriPrefix + "/collections/search?"+filtersQuery+"&access_token="+accessToken);
+		JSONObject collectionResult = RestClient.get ("/v1/payments/search?"+filtersQuery+"&access_token="+accessToken);
 		return collectionResult;
 	}
 

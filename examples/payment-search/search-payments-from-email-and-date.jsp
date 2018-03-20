@@ -2,7 +2,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Search payments from two e-mails in January</title>
+        <title>Search payments from an e-mail in January</title>
     </head>
     <body>
         <%-- Include Mercadopago library --%>
@@ -14,7 +14,7 @@
         <%
         /**
          * MercadoPago SDK
-         * Search payments from two e-mails in January
+         * Search payments from an e-mail in January
          * @date 2012/03/29
          * @author hcasatti
          */
@@ -26,7 +26,7 @@
       
         // Sets the filters you want
         Map<String, Object> filters = new HashMap<String, Object> ();
-            filters.put("payer_email", "mail02@mail02.com%20mail01@mail01.com");
+            filters.put("payer.email", "mail02@mail02.com");
             filters.put("begin_date", "2011-01-01T00:00:00Z");
             filters.put("end_date", "2011-02-01T00:00:00Z");
       
@@ -37,15 +37,14 @@
         // Show payment information
         %>
         <table border='1'>
-            <tr><th>id</th><th>site_id</th><th>external_reference</th><th>status</th></tr>
+            <tr><th>id</th><th>external_reference</th><th>status</th></tr>
             <%
             for (int i = 0; i < results.length(); i++) {
                 %>
                 <tr>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("id")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("site_id")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("external_reference")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("status")%></td>
+                    <td><%=results.getJSONObject(i).getString("id")%></td>
+                    <td><%=results.getJSONObject(i).getString("external_reference")%></td>
+                    <td><%=results.getJSONObject(i).getString("status")%></td>
                 </tr>
                 <%
             }

@@ -27,7 +27,7 @@
         // Sets the filters you want
         Map<String, Object> filters = new HashMap<String, Object> ();
             filters.put("installments", "12");
-            filters.put("reason", "product_name");
+            filters.put("description", "product_name");
             filters.put("operation_type", "regular_payment");
       
         // Search payment data according to filters
@@ -37,14 +37,14 @@
         // Show payment information
         %>
         <table border='1'>
-            <tr><th>id</th><th>site_id</th><th>external_reference</th><th>status</th></tr>
+            <tr><th>id</th><th>external_reference</th><th>status</th></tr>
             <%
             for (int i = 0; i < results.length(); i++) {
                 %>
                 <tr>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("id")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("external_reference")%></td>
-                    <td><%=results.getJSONObject(i).getJSONObject("collection").getString("status")%></td>
+                    <td><%=results.getJSONObject(i).getString("id")%></td>
+                    <td><%=results.getJSONObject(i).getString("external_reference")%></td>
+                    <td><%=results.getJSONObject(i).getString("status")%></td>
                 </tr>
                 <%
             }
