@@ -18,6 +18,15 @@ import com.sun.jersey.api.client.WebResource.Builder;
 import com.sun.jersey.client.apache.ApacheHttpClient;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import com.sun.jersey.client.urlconnection.HTTPSProperties;
+
+import javax.net.ssl.*;
+
+
 /**
  * MercadoPago Integration Library
  * Access MercadoPago for payments integration
@@ -669,7 +678,36 @@ public class MP {
 				config.getProperties().put(DefaultApacheHttpClientConfig.PROPERTY_PROXY_URI, proxy);
 			}
 
-        			ApacheHttpClient client = ApacheHttpClient.create(config);
+            try {
+                HostnameVerifier hostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
+                SSLContext ctx = SSLContext.getInstance("TLSv1");
+
+                TrustManager[ ] certs = new TrustManager[ ] {
+                        new X509TrustManager() {
+                            @Override
+                            public X509Certificate[] getAcceptedIssuers() {
+                                return null;
+                            }
+                            @Override
+                            public void checkServerTrusted(X509Certificate[] chain, String authType)
+                                    throws CertificateException {
+                            }
+                            @Override
+                            public void checkClientTrusted(X509Certificate[] chain, String authType)
+                                    throws CertificateException {
+                            }
+                        }
+                };
+
+                ctx.init(null, certs, null);
+                config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(hostnameVerifier, ctx));
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            }
+
+            ApacheHttpClient client = ApacheHttpClient.create(config);
 
 			WebResource resource = client.resource(resourceUrl);
 			Builder req = resource.type(contentType).accept("application/json");
